@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Sharing Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://example.com/kitchen-background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            background-attachment: fixed;
+            color: #333;
+        }
+        header {
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 30px;
+        }
+        main {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .recipe-list {
+            margin-top: 20px;
+        }
+        .recipe-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .like-comment {
+            margin-top: 10px;
+        }
+        .submit-recipe {
+            margin-top: 20px;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recipe Sharing Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="#home" class="text-white">Home</a></li>
+                <li><a href="#recipes" class="text-white">Recipes</a></li>
+            </ul>
+        </nav>
+        <p>Admin: Ayush Kumar | Contact: ayusharyankumar55@gmail.com</p>
+    </header>
+
+    <main>
+        <section id="submit-recipe" class="submit-recipe">
+            <h2>Submit Your Recipe</h2>
+            <form id="recipe-form">
+                <input type="text" placeholder="Recipe Name" required class="form-control">
+                <textarea placeholder="Ingredients" required class="form-control" rows="3"></textarea>
+                <textarea placeholder="Instructions" required class="form-control" rows="3"></textarea>
+                <button type="submit" class="btn btn-success">Submit Recipe</button>
+            </form>
+        </section>
+
+        <section id="recipes" class="recipe-list">
+            <h2>Recipes</h2>
+            <div id="recipe-list">
+                <p>No recipes submitted yet.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Recipe Sharing Platform</p>
+        <p><a href="prototype-link.html" class="text-white">View Prototype</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('recipe-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const recipeName = e.target[0].value;
+            const ingredients = e.target[1].value;
+            const instructions = e.target[2].value;
+
+            const recipeList = document.getElementById('recipe-list');
+            recipeList.innerHTML += `<div class="recipe-item"><h3>${recipeName}</h3><p><strong>Ingredients:</strong> ${ingredients}</p><p><strong>Instructions:</strong> ${instructions}</p><div class="like-comment"><button class="btn btn-primary">Like</button> <button class="btn btn-secondary">Comment</button></div></div>`;
+            
+            e.target.reset(); // Clear the form
+        });
+    </script>
+</body>
+</html>

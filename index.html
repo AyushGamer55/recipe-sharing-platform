@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Sharing Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light background for better contrast */
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50; /* Prominent header color */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for modern look */
+        }
+
+        main {
+            padding: 40px 20px;
+            min-height: 100vh; /* Ensures it takes full height for scrolling */
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50; /* Consistent footer color */
+            color: white;
+            border-top: 2px solid #fff;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.2s; /* Hover effect */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .recipe-card:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+
+        .recipe-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .food-images {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .food-images img {
+            width: 30%; /* Adjust as needed for size */
+            border-radius: 5px;
+        }
+
+        footer img {
+            width: 100px; /* Adjust the size of the footer image */
+            margin-top: 10px;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recipe Sharing Platform</h1>
+        <nav>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#home" class="text-light">Home</a></li>
+                <li class="list-inline-item"><a href="#recipes" class="text-light">Recipes</a></li>
+                <li class="list-inline-item"><a href="#about" class="text-light">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main id="home">
+        <section id="submit-recipe">
+            <h2>Submit Your Recipe</h2>
+            <form id="recipe-form" class="mb-3">
+                <input type="text" placeholder="Recipe Name" required class="form-control">
+                <textarea placeholder="Ingredients" required class="form-control"></textarea>
+                <textarea placeholder="Instructions" required class="form-control"></textarea>
+                <input type="file" accept="image/*" class="form-control" required>
+                <button type="submit" class="btn btn-success">Submit Recipe</button>
+            </form>
+        </section>
+
+        <section id="recipes">
+            <h2>Recipes</h2>
+            <div id="recipe-list" class="row">
+                <p class="no-recipes col-12">No recipes submitted yet.</p>
+            </div>
+        </section>
+
+        <div class="food-images">
+            <img src="https://media.istockphoto.com/id/1829241109/photo/enjoying-a-brunch-together.jpg?b=1&s=612x612&w=0&k=20&c=Mn_EPBAGwtzh5K6VyfDmd7Q5eJFXSHhGWVr3T4WDQRo=" alt="Brunch">
+            <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg" alt="Burger">
+            <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/09/fresh-vegetables.jpg" alt="Vegetables">
+        </div>
+
+        <section id="about">
+            <h2>About</h2>
+            <p><strong>Name:</strong> Ayush Kumar</p>
+            <p><strong>Role:</strong> Admin</p>
+            <p><strong>Contact:</strong> <a href="mailto:ayusharyankumar55@gmail.com">ayusharyankumar55@gmail.com</a></p>
+            <p>This platform aims to connect food enthusiasts by allowing users to share and explore recipes.</p>
+            <button onclick="showPersonas()" class="btn btn-info">Learn About Our Users</button>
+            <div id="user-personas" style="display: none;">
+                <h3>User Personas</h3>
+                <ul>
+                    <li><strong>Emma:</strong> The Home Cook who enjoys experimenting with new dishes.</li>
+                    <li><strong>Jake:</strong> The College Student looking for quick and easy recipes.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Recipe Sharing Platform | <a href="prototype-link.html" class="text-light">View Prototype</a></p>
+        <img src="https://media.istockphoto.com/id/921957202/photo/cooking-vegetables-step-six-mixing.jpg?b=1&s=612x612&w=0&k=20&c=8PX_LqDiAmy4gp6SsN_S_M7Kdj5_fppqzJJ11Zdpmx4=" alt="Kitchen Icon">
+    </footer>
+
+    <script>
+        document.getElementById('recipe-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const recipeName = e.target[0].value;
+            const ingredients = e.target[1].value;
+            const instructions = e.target[2].value;
+            const imageFile = e.target[3].files[0];
+
+            const recipeList = document.getElementById('recipe-list');
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const recipeHTML = `
+                    <div class="recipe-card col-md-4">
+                        <h3>${recipeName}</h3>
+                        <img src="${event.target.result}" alt="${recipeName}">
+                        <p><strong>Ingredients:</strong> ${ingredients}</p>
+                        <p><strong>Instructions:</strong> ${instructions}</p>
+                        <button class="btn btn-primary" onclick="likeRecipe(this)">Like</button>
+                        <button class="btn btn-secondary" onclick="commentOnRecipe(this)">Comment</button>
+                    </div>`;
+                recipeList.innerHTML += recipeHTML;
+                if (recipeList.querySelector('.no-recipes')) {
+                    recipeList.querySelector('.no-recipes').style.display = 'none'; // Hide "No recipes submitted yet."
+                }
+            };
+
+            reader.readAsDataURL(imageFile);
+            e.target.reset(); // Clear the form
+        });
+
+        function showPersonas() {
+            document.getElementById('user-personas').style.display = 'block';
+        }
+
+        function likeRecipe(button) {
+            const recipeDiv = button.parentElement;
+            const likes = recipeDiv.querySelector('.likes-count') || document.createElement('span');
+            likes.className = 'likes-count';
+            likes.textContent = likes.textContent ? ` Likes: ${parseInt(likes.textContent.split(': ')[1]) + 1}` : ' Likes: 1';
+            recipeDiv.appendChild(likes);
+        }
+
+        function commentOnRecipe(button) {
+            const recipeDiv = button.parentElement;
+            const comment = prompt("Enter your comment:");
+            if (comment) {
+                const commentsSection = recipeDiv.querySelector('.comments') || document.createElement('div');
+                commentsSection.className = 'comments';
+                commentsSection.innerHTML += `<p>${comment}</p>`;
+                recipeDiv.appendChild(commentsSection);
+            }
+        }
+    </script>
+</body>
+</html>
